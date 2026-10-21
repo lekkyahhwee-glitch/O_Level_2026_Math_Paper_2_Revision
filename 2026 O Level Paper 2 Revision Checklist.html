@@ -1,0 +1,862 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Paper 2 Revision Checklist</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: sticky topic sidebar (drawer on phones) + one long revision column; each topic = key ideas → watch out → practice → rate yourself */
+:root{
+  --bg:#F3F5FB; --panel:#FFFFFF; --ink:#16192E; --muted:#5A6080; --line:#DCE0EE; --chip:#E9ECF7;
+  --t1:#FF5A45; --t2:#FFB627; --t3:#1FA7A0; --t4:#8A90AE;
+  --good:#18A558; --shaky:#FFB627; --bad:#FF5A45; --amber:#FFB627; --pink:#FF2D85; --coverInk:#16192E;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --tb:56px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12142A; --panel:#1C1F3A; --ink:#EEF0FA; --muted:#A3A9C8; --line:#2E3256; --chip:#262A4A; --t4:#9EA4C4; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12142A; --panel:#1C1F3A; --ink:#EEF0FA; --muted:#A3A9C8; --line:#2E3256; --chip:#262A4A; --t4:#9EA4C4; color-scheme:dark}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:calc(var(--tb) + 24px)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+button{font:inherit;cursor:pointer;color:inherit}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--t3);outline-offset:2px}
+
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:36px;max-width:1180px;margin:0 auto}
+
+/* ---------- sidebar ---------- */
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;padding-block:22px calc(var(--tb) + 24px);scrollbar-width:thin}
+.side .brand{font-family:var(--display);font-weight:800;font-size:20px;line-height:1.15;margin:0 0 4px}
+.side .sub{font-size:13px;color:var(--muted);margin:0 0 14px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px;margin-bottom:16px}
+.stat-row{display:flex;justify-content:space-between;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+.meter{height:10px;border-radius:99px;background:var(--chip);overflow:hidden;display:flex}
+.meter i{display:block;height:100%;transition:width .4s}
+.meter .s{background:var(--good)} .meter .h{background:var(--shaky)} .meter .p{background:var(--t3)}
+.nav-tier{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin:16px 0 6px;display:flex;align-items:center;gap:8px}
+.nav-tier::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--tc)}
+.nav a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);padding:8px 10px;border-radius:10px;font-size:15px;line-height:1.25;border-left:4px solid transparent;transition:background .2s}
+.nav a:hover{background:var(--chip)}
+.nav a.active{background:var(--ink);color:var(--bg);border-left-color:var(--tc)}
+.nav a .nm{flex:1;min-width:0}
+.nav a .ct{font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;background:var(--chip);color:var(--ink);border-radius:6px;padding:2px 6px;white-space:nowrap}
+.nav a.active .ct{background:var(--bg);color:var(--ink)}
+.nav a .ct.done{background:var(--good);color:#fff}
+.side-foot{margin-top:18px;display:grid;gap:8px}
+.tbtn{border:2px solid var(--line);background:var(--panel);border-radius:10px;padding:7px 12px;font-size:14px;font-weight:700}
+
+.topbar{display:none}
+.scrim{display:none}
+@media (max-width:899px){
+  .layout{display:block}
+  .side{position:fixed;inset:0 auto 0 0;width:min(320px,86vw);height:100%;z-index:40;background:var(--bg);
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:16px;padding-top:calc(env(safe-area-inset-top,0px) + 18px);
+    transform:translateX(-105%);transition:transform .3s;box-shadow:0 0 30px rgba(0,0,0,.25)}
+  .side.open{transform:none}
+  .scrim.open{display:block;position:fixed;inset:0;background:rgba(10,12,30,.45);z-index:35}
+  .topbar{display:flex;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);align-items:center;gap:10px;padding-block:10px;border-bottom:1px solid var(--line);margin-inline:-4px}
+  .topbar .cur{flex:1;min-width:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar .score{font-size:13px;font-weight:700;background:var(--chip);border-radius:8px;padding:4px 8px;font-variant-numeric:tabular-nums}
+}
+
+/* ---------- main ---------- */
+main{min-width:0;padding-block:22px 40px;max-width:780px}
+header h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,6vw,46px);line-height:1.05;margin:6px 0 10px;text-wrap:balance}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.lede{color:var(--muted);margin:0 0 12px;max-width:62ch}
+.howto{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px}
+.howto div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:15px}
+.howto b{display:block;font-family:var(--display);font-size:17px;margin-bottom:2px}
+
+.topic{scroll-margin-top:72px;margin-top:56px;padding-top:22px;border-top:3px solid var(--tc)}
+.tier-tag{display:inline-block;color:#fff;font-weight:700;font-size:12px;letter-spacing:.07em;text-transform:uppercase;border-radius:6px;padding:3px 9px;background:var(--tc)}
+.tier-tag.dark{color:#16192E}
+.topic h2{font-family:var(--display);font-weight:800;font-size:clamp(26px,4.5vw,34px);line-height:1.1;margin:8px 0 4px;text-wrap:balance}
+.why{color:var(--muted);margin:0}
+.part{font-family:var(--display);font-weight:600;font-size:19px;margin:26px 0 10px;display:flex;align-items:center;gap:8px}
+.part small{font-family:var(--body);font-size:13px;color:var(--muted);font-weight:400}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.card{perspective:1100px;background:none;border:0;padding:0;text-align:left;width:100%}
+.card-in{display:grid;transition:transform .55s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;height:100%}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:16px;min-height:130px;display:flex;flex-direction:column;gap:8px}
+.front{background:var(--amber);color:var(--coverInk);animation:glow 1.8s ease-in-out infinite}
+.front .qq{font-family:var(--display);font-weight:800;font-size:19px;line-height:1.2}
+.front .tap{margin-top:auto;font-size:13px;font-weight:700;opacity:.75}
+.back{transform:rotateY(180deg);background:var(--panel);border:2px solid var(--amber);font-size:16px}
+.back p{margin:0}
+.back .tap{margin-top:auto;font-size:12px;color:var(--muted)}
+.card.flipped .card-in{transform:rotateY(180deg)}
+.card.seen .front{animation:none}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(255,45,133,0);transform:scale(1)}50%{box-shadow:0 0 22px 6px rgba(255,45,133,.75);transform:scale(1.02)}}
+.card.wide{grid-column:1/-1}
+.minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
+.minis figure{margin:0;text-align:center;font-size:15px}
+.minis svg{width:100%;height:auto}
+
+/* common errors */
+.errs{display:grid;gap:10px}
+.err{background:var(--bad);color:#fff;border-radius:12px;padding:12px 14px 12px 46px;position:relative;font-size:16px}
+.err::before{content:"!";position:absolute;left:12px;top:11px;width:24px;height:24px;border-radius:50%;background:#fff;color:var(--bad);font-weight:800;display:grid;place-items:center;font-size:15px}
+.err .frac>span:first-child{border-color:#fff}
+
+/* questions */
+.q{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}
+.q.right{border-color:var(--good);box-shadow:inset 4px 0 0 var(--good)}
+.q.rev{border-color:var(--shaky);box-shadow:inset 4px 0 0 var(--shaky)}
+.qhead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.qnum{font-family:var(--display);font-weight:800;font-size:15px;background:var(--ink);color:var(--bg);border-radius:8px;padding:2px 9px}
+.qstat{font-size:13px;font-weight:700;color:var(--muted)}
+.qtext{margin:0}
+.dia{margin:12px 0;overflow-x:auto}
+.dia svg{width:100%;max-width:480px;height:auto;display:block;margin:0 auto}
+.dtable{border-collapse:collapse;margin:10px 0;font-variant-numeric:tabular-nums}
+.dtable td,.dtable th{border:1.5px solid var(--line);padding:6px 12px;text-align:center}
+.dtable th{background:var(--chip)}
+.ansrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+.ansrow input{font:inherit;font-size:18px;width:170px;max-width:100%;padding:9px 12px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.unit{font-weight:700;color:var(--muted)}
+.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:700;background:var(--ink);color:var(--bg);min-height:44px}
+.hbtn{border:2px solid var(--amber);background:transparent;border-radius:10px;padding:8px 14px;font-weight:700;min-height:44px}
+.hbtn.nudge{animation:nudge 1s ease-in-out 3}
+@keyframes nudge{0%,100%{transform:none;background:transparent}50%{transform:scale(1.08);background:var(--amber);color:var(--coverInk)}}
+.opts{display:grid;gap:8px;margin-top:12px}
+.opt{display:flex;align-items:center;gap:10px;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 14px;min-height:50px;font-size:17px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt .lt{font-weight:800;font-family:var(--display);width:24px;flex:0 0 auto}
+.opt.wrong{border-color:var(--bad);opacity:.6;text-decoration:line-through;text-decoration-color:var(--bad)}
+.opt.good{border-color:var(--good);background:color-mix(in srgb,var(--good) 18%,var(--bg))}
+.hint{margin-top:12px;background:color-mix(in srgb,var(--amber) 28%,var(--panel));border-radius:10px;padding:10px 14px;font-size:16px}
+.hint b{display:block;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.fb{margin-top:10px;font-weight:700;min-height:1px}
+.fb.ok{color:var(--good)} .fb.no{color:var(--bad)}
+.fb.help{color:var(--ink);background:var(--chip);border-radius:10px;padding:10px 14px;font-weight:400}
+.sol{margin-top:12px;border:2px dashed var(--t3);border-radius:12px;padding:12px 14px}
+.sol b{display:block;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
+.sol .ln{display:block;padding:3px 0;line-height:1.9}
+.showsol{margin-top:10px;background:none;border:0;padding:4px 0;text-decoration:underline;font-weight:700;color:var(--t3)}
+
+/* rate yourself */
+.rate{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.rate .key{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted);padding:6px 8px 4px}
+.item{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:none;border:0;padding:10px 8px;border-radius:10px;min-height:48px}
+.item:hover{background:var(--chip)}
+.dot{display:inline-block;flex:0 0 auto;width:24px;height:24px;border-radius:50%;border:3px solid var(--t4);margin-top:1px}
+.dot.sm{width:16px;height:16px;border-width:2px;vertical-align:-3px;margin:0 4px 0 0}
+.item[data-s="1"] .dot,.dot.h{border-color:var(--shaky);background:linear-gradient(90deg,var(--shaky) 50%,transparent 50%)}
+.item[data-s="2"] .dot,.dot.s{border-color:var(--good);background:var(--good)}
+.item[data-s="2"] .txt{color:var(--muted)}
+.txt{min-width:0}
+
+.tips{margin-top:60px;background:var(--ink);color:var(--bg);border-radius:16px;padding:20px}
+.tips h2{font-family:var(--display);font-weight:800;margin:0 0 10px;font-size:24px}
+.tips ol{margin:0;padding-left:22px;display:grid;gap:8px}
+
+/* maths */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.1;font-size:.92em;margin:0 3px}
+.frac>span{padding:0 3px;white-space:nowrap}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+.col{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.15;border-left:2px solid currentColor;border-right:2px solid currentColor;border-radius:9px;padding:0 7px;margin:0 2px;font-size:.92em}
+.vec{display:inline-block;position:relative;padding-top:.25em}
+.vec::after{content:"";position:absolute;left:5%;right:5%;top:.18em;border-top:1.5px solid currentColor}
+.vec::before{content:"";position:absolute;right:2%;top:.03em;border:4px solid transparent;border-left:6px solid currentColor;border-right:0}
+.rad{display:inline-flex;align-items:stretch;white-space:nowrap;vertical-align:middle}
+.rad-s{flex:0 0 auto;width:.62em;height:auto;align-self:stretch;overflow:visible;margin-right:-1px}
+.rad.tall .rad-s{width:.8em}
+.rad-in{display:inline-flex;align-items:center;border-top:1.6px solid currentColor;padding:2px 3px 1px 3px;line-height:1.25}
+sup .frac{font-size:1em;margin:0 1px}
+.k{background:color-mix(in srgb,var(--amber) 60%,transparent);border-radius:4px;padding:0 4px;font-weight:700}
+.nw{white-space:nowrap}
+
+/* toolbar + laser */
+.mtb{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--panel);border-top:1px solid var(--line);
+  padding:8px max(16px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;align-items:center;gap:8px;min-height:var(--tb)}
+.mtb .lbl{font-size:13px;color:var(--muted);margin-right:4px}
+.mtb .key{min-width:44px;min-height:40px;border:2px solid var(--line);background:var(--bg);border-radius:9px;font-size:19px;font-weight:700}
+.mtb .sp{flex:1}
+.laserbtn{border:2px solid var(--line);background:var(--bg);border-radius:99px;padding:6px 12px;font-weight:700;font-size:14px;min-height:40px}
+.laserbtn[aria-pressed="true"]{background:var(--bad);color:#fff;border-color:var(--bad)}
+#laser{position:fixed;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#ff2d2d;box-shadow:0 0 18px 8px rgba(255,45,45,.65);pointer-events:none;z-index:60}
+html.laser-on,html.laser-on body{touch-action:none;overscroll-behavior:none}
+
+.modal{position:fixed;inset:0;background:rgba(10,12,30,.55);display:grid;place-items:center;z-index:70;padding:16px}
+.modal>div{background:var(--panel);border-radius:14px;padding:20px;max-width:380px}
+.modal p{margin:0 0 14px}
+.modal .row{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.danger{background:var(--bad)!important;color:#fff!important;border-color:var(--bad)!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media print{.mtb,#laser,.side,.topbar{display:none!important}}
+</style>
+
+<div class="layout">
+  <aside class="side" id="side" aria-label="Topics">
+    <p class="brand">Paper 2 Revision Checklist</p>
+    <p class="sub">O-Level Mathematics 4052</p>
+    <div class="stat">
+      <div class="stat-row"><span>Skills I'm confident in</span><span id="sConf">0/0</span></div>
+      <div class="meter" aria-hidden="true"><i class="s" id="mS"></i><i class="h" id="mH"></i></div>
+      <div class="stat-row"><span>Practice score</span><span id="sScore">0/0</span></div>
+      <div class="meter" aria-hidden="true"><i class="p" id="mP"></i></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">
+      <button class="tbtn" id="resetBtn">Reset my progress</button>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <main>
+    <div class="topbar">
+      <button class="tbtn" id="menuBtn" aria-controls="side" aria-expanded="false">☰ Topics</button>
+      <span class="cur" id="curTopic">Start here</span>
+      <span class="score" id="tScore">0/0</span>
+    </div>
+    <header id="top">
+      <div class="eyebrow">O-Level Mathematics 4052 · Paper 2</div>
+      <h1>Paper 2 Revision Checklist</h1>
+      <p class="lede">Start with the <b>Very likely</b> topics and work down. Each topic has key ideas, common errors, practice questions and a self-rating list. Your progress is saved on this device.</p>
+      <div class="howto">
+        <div><b>Key ideas</b>Tap a yellow card to flip it and see the formula or definition. Tap again to hide it.</div>
+        <div><b>Watch out</b>The red boxes are mistakes students often make. Read them before you practise.</div>
+        <div><b>Practice</b>You get 2 tries. Stuck? Tap 💡 Hint. 2 points for a 1st try, 1 point for a 2nd try.</div>
+        <div><b>Rate yourself</b>Tap each skill: <span class="nw"><span class="dot sm"></span>not yet</span> → <span class="nw"><span class="dot sm h"></span>getting there</span> → <span class="nw"><span class="dot sm s"></span>confident</span>.</div>
+      </div>
+    </header>
+    <div id="topics"></div>
+    <section class="tips" id="tips">
+      <h2>Before you hand in Paper 2</h2>
+      <ol>
+        <li>Show your working. One step per line, so the marker can follow it.</li>
+        <li>Answers to 3 significant figures, angles to 1 decimal place, unless the question says otherwise.</li>
+        <li>Use your calculator's π or 3.142.</li>
+        <li>Keep full values in your calculator. Only round at the final answer.</li>
+        <li>Check DEG or RAD mode before every trig question.</li>
+        <li>The marks in [ ] tell you roughly how many steps are needed.</li>
+        <li>Write units on every answer (cm², km/h, $, °).</li>
+        <li>Graph question: smooth curve, no ruler joins, label your line.</li>
+        <li>Real-world question: end with a clear decision and the numbers that support it.</li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+<div class="mtb" id="mtb">
+  <span class="lbl">Maths keys</span>
+  <button class="key" data-k="−" aria-label="minus">−</button>
+  <button class="key" data-k="/" aria-label="fraction bar">/</button>
+  <button class="key" data-k="." aria-label="decimal point">.</button>
+  <span class="sp"></span>
+  <button class="laserbtn" id="laserBtn" aria-pressed="false">● Laser</button>
+</div>
+<div id="laser" hidden></div>
+
+<div class="modal" id="modal" hidden><div role="dialog" aria-modal="true" aria-labelledby="mtxt">
+  <p id="mtxt">Clear all your ratings and practice answers and start again?</p>
+  <div class="row"><button class="tbtn" id="mNo">Cancel</button><button class="tbtn danger" id="mYes">Clear everything</button></div>
+</div></div>
+
+<script>
+/* ---------- maths helpers ---------- */
+const F=(a,b)=>`<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+const C=(a,b)=>`<span class="col"><span>${a}</span><span>${b}</span></span>`;
+const V=s=>`<span class="vec">${s}</span>`;
+const B=s=>`<b>${s}</b>`;
+const rad=x=>`<span class="rad${x.includes("frac")?" tall":""}" role="text" aria-label="square root of"><svg class="rad-s" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2 64 L24 54 L52 99 L99 1.5" fill="none" stroke="currentColor" stroke-width="1.6" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg><span class="rad-in">${x}</span></span>`;
+/* turn every √(…) or √number / √letter into a radical whose bar covers the whole radicand */
+function radicals(h){
+  let out="",i=0;
+  while(i<h.length){
+    const j=h.indexOf("√",i);if(j<0){out+=h.slice(i);break}
+    out+=h.slice(i,j);const k=j+1;
+    if(h[k]==="("){let d=0,m=k;for(;m<h.length;m++){if(h[m]==="(")d++;else if(h[m]===")"){d--;if(!d)break}}
+      out+=rad(radicals(h.slice(k+1,m)));i=m+1}
+    else{const mm=/^(\d+(\.\d+)?|<i>[a-z]<\/i>)/.exec(h.slice(k));
+      if(mm){out+=rad(mm[0]);i=k+mm[0].length}else{out+="√";i=k}}
+  }
+  return out;
+}
+
+/* ---------- diagrams ---------- */
+const ST='stroke="currentColor" fill="none" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"';
+const T=(x,y,s,o='')=>`<text x="${x}" y="${y}" fill="currentColor" font-size="16" font-family="Atkinson Hyperlegible,sans-serif" ${o}>${s}</text>`;
+const svg=(vb,inner,lbl)=>`<svg viewBox="${vb}" role="img" aria-label="${lbl}">${inner}</svg>`;
+function curvePath(fn,x0,x1,map,ymin,ymax){
+  let d="",pen=false;
+  for(let i=0;i<=200;i++){const x=x0+(x1-x0)*i/200,y=fn(x);
+    if(!isFinite(y)||y<ymin||y>ymax){pen=false;continue}
+    const [px,py]=map(x,y);d+=(pen?"L":"M")+px.toFixed(1)+" "+py.toFixed(1)+" ";pen=true}
+  return d;
+}
+function sketch(fns,size=300,lbl="sketch"){
+  const R=4,m=size/2,s=(size/2-14)/R,map=(x,y)=>[m+x*s,m-y*s];
+  let g=`<line x1="10" y1="${m}" x2="${size-10}" y2="${m}" ${ST} stroke-width="1.6"/><line x1="${m}" y1="${size-10}" x2="${m}" y2="10" ${ST} stroke-width="1.6"/>`;
+  g+=`<path d="M${size-10} ${m} l-9 -5 v10z M${m} 10 l-5 9 h10z" fill="currentColor"/>`;
+  g+=T(size-24,m+22,"x","font-style=\"italic\"")+T(m+8,24,"y","font-style=\"italic\"");
+  fns.forEach(([fn,a,b])=>{g+=`<path d="${curvePath(fn,a,b,map,-R,R)}" stroke="#FF2D85" fill="none" stroke-width="3"/>`});
+  return svg(`0 0 ${size} ${size}`,g,lbl);
+}
+const mini=(fns,label)=>`<figure>${sketch(fns,120,"Sketch of "+label.replace(/<[^>]+>/g," ").replace(/\s+/g," "))}<figcaption>${label}</figcaption></figure>`;
+const DIA={
+  recip: sketch([[x=>-1/x,-4,-0.05],[x=>-1/x,0.05,4]],300,"Two curves, one in the top-left and one in the bottom-right quadrant"),
+  triABC: svg("0 0 320 240",
+    `<polygon points="40,210 200,210 175.4,36.6" ${ST}/>`+
+    `<path d="M70 210 A30 30 0 0 0 58.5 186.4" ${ST} stroke-width="1.6"/>`+
+    T(16,226,"A")+T(204,228,"B")+T(170,26,"C")+T(105,232,"8 cm")+T(52,118,"11 cm")+T(76,200,"52°")+T(198,128,"?","font-weight=\"700\""),
+    "Triangle ABC with AB 8 cm, AC 11 cm and angle A 52 degrees"),
+  triABCarea: svg("0 0 320 240",
+    `<polygon points="40,210 200,210 175.4,36.6" ${ST}/>`+
+    `<path d="M70 210 A30 30 0 0 0 58.5 186.4" ${ST} stroke-width="1.6"/>`+
+    T(16,226,"A")+T(204,228,"B")+T(170,26,"C")+T(105,232,"8 cm")+T(52,118,"11 cm")+T(76,200,"52°"),
+    "Triangle ABC with AB 8 cm, AC 11 cm and angle A 52 degrees"),
+  triPQR: svg("0 0 300 240",
+    `<polygon points="30,210 255,210 237.5,36" ${ST}/>`+
+    `<path d="M68 210 A38 38 0 0 0 59.1 185.6" ${ST} stroke-width="1.6"/>`+
+    T(10,226,"P")+T(260,228,"Q")+T(236,26,"R")+T(126,232,"9 cm")+T(252,128,"7 cm")+T(74,200,"40°")+T(215,86,"?","font-weight=\"700\"")+`<path d="M220.6 50.1 A22 22 0 0 0 239.7 57.9" ${ST} stroke-width="1.6"/>`,
+    "Triangle PQR with PQ 9 cm, QR 7 cm and angle P 40 degrees"),
+  vecOAB: svg("0 0 320 230",
+    `<path d="M30 200 L150 40 M30 200 L290 200 M150 40 L290 200" ${ST}/>`+
+    `<path d="M96 112 L92.8 124.6 L84.8 118.6z M160 200 l-12 -6 v12z" fill="currentColor"/>`+
+    `<circle cx="185" cy="80" r="4.5" fill="#FF2D85"/>`+
+    T(12,214,"O")+T(144,30,"A")+T(294,216,"B")+T(194,78,"P","fill=\"#FF2D85\" font-weight=\"700\"")+T(70,112,"a","font-weight=\"700\"")+T(152,222,"b","font-weight=\"700\""),
+    "Triangle OAB with OA equal to vector a and OB equal to vector b, P on AB"),
+  sector: svg("0 0 300 220",
+    `<path d="M150 200 L68.7 81.1 A144 144 0 0 1 231.3 81.1 Z" fill="color-mix(in srgb,#FFB627 35%,transparent)" ${ST.replace('fill="none" ','')}/>`+
+    `<line x1="68.7" y1="81.1" x2="231.3" y2="81.1" ${ST} stroke-dasharray="6 6" stroke-width="1.6"/>`+
+    `<path d="M132.8 175.2 A30 30 0 0 1 167.2 175.2" ${ST} stroke-width="1.6"/>`+`<path d="M236 38 L196 66" ${ST} stroke-width="1.4"/>`+
+    `<circle cx="150" cy="200" r="3.5" fill="currentColor"/>`+T(144,218,"O")+T(150,152,"1.2 rad","text-anchor=\"middle\" font-size=\"14\"")+T(98,150,"8 cm","text-anchor=\"end\"")+T(238,34,"segment","font-size=\"14\""),
+    "Sector of radius 8 cm and angle 1.2 radians, with a dashed chord"),
+  speed: svg("0 0 350 240",
+    `<line x1="40" y1="190" x2="335" y2="190" ${ST} stroke-width="1.6"/><line x1="40" y1="190" x2="40" y2="18" ${ST} stroke-width="1.6"/>`+
+    `<path d="M335 190 l-9 -5 v10z M40 18 l-5 9 h10z" fill="currentColor"/>`+
+    `<path d="M40 190 L96 46 L236 46 L320 190" stroke="#FF2D85" fill="none" stroke-width="3"/>`+
+    `<path d="M96 46 V190 M236 46 V190 M40 46 H96" ${ST} stroke-width="1" stroke-dasharray="4 5"/>`+
+    T(16,195,"0")+T(14,51,"12")+T(90,210,"4")+T(226,210,"14")+T(312,210,"20")+T(200,232,"time (s)","font-size=\"14\"")+
+    T(46,16,"speed (m/s)","font-size=\"14\""),
+    "Speed time graph rising from 0 to 12 metres per second in 4 seconds, constant until 14 seconds, falling to 0 at 20 seconds"),
+  grid: (()=>{let g="";const o=30,s=36;
+    for(let i=0;i<=7;i++){g+=`<line x1="${o+i*s}" y1="${o}" x2="${o+i*s}" y2="${o+7*s}" stroke="currentColor" stroke-opacity=".18"/><line x1="${o}" y1="${o+i*s}" x2="${o+7*s}" y2="${o+i*s}" stroke="currentColor" stroke-opacity=".18"/>`;
+      if(i)g+=T(o+i*s-4,o+7*s+18,i,"font-size=\"13\"")+T(o-18,o+(7-i)*s+5,i,"font-size=\"13\"")}
+    g+=T(o-14,o+7*s+18,"0","font-size=\"13\"")+T(o+7*s+10,o+7*s+5,"x","font-style=\"italic\"")+T(o-4,o-10,"y","font-style=\"italic\"");
+    g+=`<line x1="${o}" y1="${o+7*s}" x2="${o+7*s}" y2="${o+7*s}" ${ST} stroke-width="1.6"/><line x1="${o}" y1="${o+7*s}" x2="${o}" y2="${o}" ${ST} stroke-width="1.6"/>`;
+    const P=(x,y)=>[o+x*s,o+(7-y)*s];
+    [["A",1,1],["B",4,2],["C",6,5]].forEach(([n,x,y])=>{const[a,b]=P(x,y);g+=`<circle cx="${a}" cy="${b}" r="5" fill="#FF2D85"/>`+T(a+8,b-8,`${n}(${x}, ${y})`,"font-weight=\"700\"")});
+    return svg("0 0 340 312",g,"Grid with points A(1, 1), B(4, 2) and C(6, 5)")})()
+};
+const homeworkTable=`<table class="dtable"><tr><th>Time (<i>t</i> min)</th><th>10 &lt; <i>t</i> ≤ 20</th><th>20 &lt; <i>t</i> ≤ 30</th><th>30 &lt; <i>t</i> ≤ 40</th></tr><tr><th>Frequency</th><td>4</td><td>6</td><td>10</td></tr></table>`;
+
+/* ---------- content ---------- */
+const TIERS=[
+ {name:"Very likely",color:"var(--t1)",dark:false},
+ {name:"Likely",color:"var(--t2)",dark:true},
+ {name:"Possible",color:"var(--t3)",dark:false},
+ {name:"Quick check",color:"var(--t4)",dark:false}];
+
+const TOPICS=[
+/* ---------------- VERY LIKELY ---------------- */
+{id:"graphs",tier:0,t:"Graphs of functions",why:"Not in Paper 1 at all. Usually a 10–12 mark question.",
+ cards:[
+  {wide:true,q:"What do the main graph shapes look like?",a:`<div class="minis">${mini([[x=>x*x,-3,3]],"y = x²")}${mini([[x=>-x*x,-3,3]],"y = −x²")}${mini([[x=>x*x*x,-2,2]],"y = x³")}${mini([[x=>1/x,-4,-.05],[x=>1/x,.05,4]],"<i>y</i> = "+F(1,"<i>x</i>"))}${mini([[x=>Math.pow(2,x),-4,2.2]],"y = 2ˣ")}${mini([[x=>Math.pow(2,-x),-2.2,4]],"y = 2⁻ˣ")}</div>`},
+  {q:"How do I solve an equation using a graph I've drawn?",a:`<p>1. Rearrange the new equation so one side is exactly the curve you drew.</p><p>2. The other side is the straight line to draw.</p><p>3. Read the <i>x</i>-coordinates where they meet.</p>`},
+  {q:"How do I find the gradient of a curve at a point?",a:`<p>1. Draw a tangent that just touches the curve at that point.</p><p>2. Pick two points far apart on the tangent.</p><p>3. Gradient = ${F("change in <i>y</i>","change in <i>x</i>")}</p>`}],
+ errs:["Joining points with a ruler. A curve must be one smooth freehand line.","Drawing <i>y</i> = "+F(1,"<i>x</i>")+" across the <i>y</i>-axis. The curve never touches <i>x</i> = 0.","Giving <i>y</i>-values when the question asks for solutions. Solutions are the <i>x</i>-coordinates.","Forgetting the minus sign for a tangent that slopes downwards."],
+ qs:[
+  {type:"num",q:"For <i>y</i> = <i>x</i>³ − 3<i>x</i> + 1, find the value of <i>y</i> when <i>x</i> = −2.",ans:-1,
+   hint:"What is (−2)³? Is it positive or negative? Then what is −3 × (−2)?",
+   sol:["<i>y</i> = (−2)³ − 3(−2) + 1","= −8 + 6 + 1","= −1"]},
+  {type:"mcq",q:"Which equation matches this sketch?",dia:"recip",
+   opts:["<i>y</i> = −"+F(1,"<i>x</i>"),"<i>y</i> = "+F(1,"<i>x</i>"),"<i>y</i> = −<i>x</i>³","<i>y</i> = "+F(1,"<i>x</i>²")],
+   hint:"Which quadrants are the two branches in? Try <i>x</i> = 1: is <i>y</i> positive or negative there?",
+   sol:["The graph has two separate branches, so it is a reciprocal graph.","The branches are in the 2nd and 4th quadrants.","At <i>x</i> = 1, <i>y</i> is negative.","So <i>y</i> = −"+F(1,"<i>x</i>")]},
+  {type:"mcq",q:"The graph of <i>y</i> = <i>x</i>² − 2<i>x</i> − 3 has been drawn. Which straight line should you draw to solve <i>x</i>² − 3<i>x</i> − 5 = 0?",
+   opts:["<i>y</i> = <i>x</i> + 2","<i>y</i> = <i>x</i> − 2","<i>y</i> = −<i>x</i> + 2","<i>y</i> = 3<i>x</i> + 5"],
+   hint:"Can you rewrite <i>x</i>² − 3<i>x</i> − 5 = 0 so the left side is exactly <i>x</i>² − 2<i>x</i> − 3? What must you add to both sides?",
+   sol:["<i>x</i>² − 3<i>x</i> − 5 = 0","<i>x</i>² − 2<i>x</i> − 3 − <i>x</i> − 2 = 0","<i>x</i>² − 2<i>x</i> − 3 = <i>x</i> + 2","Draw the line <i>y</i> = <i>x</i> + 2"]}],
+ items:["I can complete a table of values, including negative values of <i>x</i>.","I can recognise the shapes of <i>y</i> = <i>ax</i>², <i>y</i> = <i>ax</i>³, <i>y</i> = "+F("<i>a</i>","<i>x</i>")+" and <i>y</i> = <i>k</i><sup><i>x</i></sup> (Start Now #30).","I can use the given scale, plot points accurately and draw a smooth curve.","I can draw a tangent at a point and find its gradient.","I can solve an equation by finding where the curve meets a horizontal line <i>y</i> = <i>c</i>.","I can rearrange an equation to find which straight line to draw, then read off the solutions.","I can read a minimum or maximum value from my graph."]},
+
+{id:"trig",tier:0,t:"Sine rule, cosine rule and bearings",why:"Paper 1 only used right-angled triangles.",
+ cards:[
+  {q:"When do I use the sine rule?",a:`<p>${F("<i>a</i>","sin <i>A</i>")} = ${F("<i>b</i>","sin <i>B</i>")} = ${F("<i>c</i>","sin <i>C</i>")}</p><p>Use it when you know a side <b>and its opposite angle</b>.</p>`},
+  {q:"When do I use the cosine rule?",a:`<p><i>a</i>² = <i>b</i>² + <i>c</i>² − 2<i>bc</i> cos <i>A</i></p><p>Use it with 2 sides and the angle between them, or with all 3 sides.</p><p>To find an angle: cos <i>A</i> = ${F("<i>b</i>² + <i>c</i>² − <i>a</i>²","2<i>bc</i>")}</p>`},
+  {q:"How do I find the area of any triangle?",a:`<p>Area = ${F(1,2)}<i>ab</i> sin <i>C</i></p><p><i>C</i> is the angle between sides <i>a</i> and <i>b</i>.</p>`},
+  {q:"How do I write a bearing?",a:`<p>Start facing North.</p><p>Turn clockwise.</p><p>Always use 3 digits, e.g. 064°.</p><p>Back bearing: add or subtract 180°.</p>`}],
+ errs:["Calculator in the wrong mode. Check it shows DEG before a degrees question.","Using the cosine rule and forgetting to square-root at the end.","The sine rule only gives an acute angle. If the angle should be obtuse, use 180° − your answer.","Measuring a bearing anticlockwise, or from the wrong point. \"Bearing of B from A\" means stand at A."],
+ qs:[
+  {type:"num",dia:"triABC",q:"In triangle <i>ABC</i>, <i>AB</i> = 8 cm, <i>AC</i> = 11 cm and angle <i>BAC</i> = 52°. Find <i>BC</i>.",ans:8.75,tol:.01,unit:"cm",
+   hint:"You know two sides and the angle between them. Which rule uses exactly that? Which side is opposite the 52° angle?",
+   sol:["<i>BC</i>² = 8² + 11² − 2(8)(11) cos 52°","<i>BC</i>² = 185 − 176 cos 52°","<i>BC</i>² = 76.644…","<i>BC</i> = 8.75 cm (3 s.f.)"]},
+  {type:"num",dia:"triABCarea",q:"Find the area of triangle <i>ABC</i>.",ans:34.7,tol:.06,unit:"cm²",
+   hint:"Which formula uses two sides and the angle between them? Which angle sits between the 8 cm and 11 cm sides?",
+   sol:["Area = "+F(1,2)+" × 8 × 11 × sin 52°","= 44 sin 52°","= 34.672…","= 34.7 cm² (3 s.f.)"]},
+  {type:"num",dia:"triPQR",q:"In triangle <i>PQR</i>, <i>PQ</i> = 9 cm, <i>QR</i> = 7 cm and angle <i>QPR</i> = 40°. Angle <i>PRQ</i> is acute. Find angle <i>PRQ</i>.",ans:55.7,tol:.06,unit:"°",
+   hint:"Which side is opposite angle <i>PRQ</i>? Which side is opposite the 40° angle? Can you pair each side with its opposite angle?",
+   sol:[F("sin <i>R</i>","9")+" = "+F("sin 40°","7"),"sin <i>R</i> = "+F("9 sin 40°","7"),"sin <i>R</i> = 0.82644…","<i>R</i> = 55.7° (1 d.p.)"]},
+  {type:"num",q:"The bearing of <i>B</i> from <i>A</i> is 064°. Find the bearing of <i>A</i> from <i>B</i>.",ans:244,unit:"°",
+   hint:"If you stand at <i>B</i> and face <i>A</i>, are you facing the opposite way? How many degrees is a half-turn?",
+   sol:["The two directions are opposite.","064° + 180°","= 244°"]}],
+ items:["I can decide when to use the <span class='k'>sine rule</span> (a side and its opposite angle are known).","I can decide when to use the <span class='k'>cosine rule</span> (3 sides, or 2 sides and the angle between them).","I can find an obtuse angle using sin <i>x</i> = sin(180° − <i>x</i>).","I can find the area of a triangle using "+F("1","2")+"<i>ab</i> sin <i>C</i>.","I can find a bearing measured clockwise from North, and a back bearing (add or subtract 180°).","I can find angles of elevation and depression.","I can find the shortest distance from a point to a line (the perpendicular distance)."]},
+
+{id:"quad",tier:0,t:"Quadratic equations from a word problem",why:"Paper 1 Q22 became a linear equation. Paper 2 usually needs the formula.",
+ cards:[
+  {q:"What is the quadratic formula?",a:`<p>For <i>ax</i>² + <i>bx</i> + <i>c</i> = 0:</p><p><i>x</i> = ${F("−<i>b</i> ± √(<i>b</i>² − 4<i>ac</i>)","2<i>a</i>")}</p>`},
+  {q:"How do I form an equation from a speed and time story?",a:`<p>Time = ${F("distance","speed")}</p><p>Write each time in terms of <i>x</i>.</p><p>Use the difference in time to form the equation.</p>`},
+  {q:"When do I reject a root?",a:`<p>When it makes no sense in the story: a negative speed, length, age or number of people.</p><p>Always write the reason.</p>`}],
+ errs:["When <i>b</i> is negative, −<i>b</i> is positive. Write −(−5) = 5 carefully.","The whole top is divided by 2<i>a</i>, not only the square root.","Not rejecting the negative root, or rejecting it without a reason.","Rounding in the middle. Keep the full value until the end."],
+ qs:[
+  {type:"num",q:"Solve 2<i>x</i>² − 5<i>x</i> − 4 = 0. Give the larger root correct to 2 decimal places.",ans:3.14,tol:.006,
+   hint:"What are <i>a</i>, <i>b</i> and <i>c</i>? Careful: what is −<i>b</i> when <i>b</i> = −5?",
+   sol:["<i>a</i> = 2, <i>b</i> = −5, <i>c</i> = −4","<i>x</i> = "+F("5 ± √((−5)² − 4(2)(−4))","2(2)"),"<i>x</i> = "+F("5 ± √57","4"),"<i>x</i> = 3.14 or <i>x</i> = −0.64","Larger root: <i>x</i> = 3.14"]},
+  {type:"mcq",q:"Wei Ming cycles 30 km at <i>x</i> km/h. On the way back he is 5 km/h slower, and the trip takes 1 hour longer. Which equation is correct?",
+   opts:[F(30,"<i>x</i> − 5")+" − "+F(30,"<i>x</i>")+" = 1",F(30,"<i>x</i>")+" − "+F(30,"<i>x</i> − 5")+" = 1",F(30,"<i>x</i> + 5")+" − "+F(30,"<i>x</i>")+" = 1",F(30,"<i>x</i>")+" − "+F(30,"<i>x</i> + 5")+" = 1"],
+   hint:"What is his speed on the way back? A slower trip takes more time, so which fraction should be the bigger one?",
+   sol:["Time there = "+F(30,"<i>x</i>")+" h","Time back = "+F(30,"<i>x</i> − 5")+" h (slower, so longer)","Time back − time there = 1",F(30,"<i>x</i> − 5")+" − "+F(30,"<i>x</i>")+" = 1"]},
+  {type:"num",q:"Using the correct equation from the question above, find Wei Ming's speed <i>x</i>.",ans:15,unit:"km/h",
+   hint:"Multiply every term by <i>x</i>(<i>x</i> − 5). What quadratic equation do you get? Which root makes sense for a speed?",
+   sol:["30<i>x</i> − 30(<i>x</i> − 5) = <i>x</i>(<i>x</i> − 5)","150 = <i>x</i>² − 5<i>x</i>","<i>x</i>² − 5<i>x</i> − 150 = 0","(<i>x</i> − 15)(<i>x</i> + 10) = 0","<i>x</i> = 15 or <i>x</i> = −10 (rejected, speed cannot be negative)","<i>x</i> = 15"]}],
+ items:["I can form an equation with algebraic fractions, e.g. time = "+F("distance","speed")+".","I can multiply through by the common denominator and rearrange to <i>ax</i>² + <i>bx</i> + <i>c</i> = 0.","I can use <i>x</i> = "+F("−<i>b</i> ± √(<i>b</i>² − 4<i>ac</i>)","2<i>a</i>")+" and give answers to 2 decimal places.","I can reject a root that does not make sense (e.g. a negative speed) and say why.","I can use my root to answer what the question actually asks.","I can complete the square to find a turning point."]},
+
+{id:"vectors",tier:0,t:"Vectors in geometry",why:"Paper 1 Q14 only used column vectors.",
+ cards:[
+  {q:"How do I find "+V("AB")+" using "+B("a")+" and "+B("b")+"?",a:`<p>Go from A to B through O:</p><p>${V("AB")} = ${V("AO")} + ${V("OB")}</p><p>= −${B("a")} + ${B("b")}</p><p>= ${B("b")} − ${B("a")}</p>`},
+  {q:"How do I split a line in a ratio?",a:`<p>If <i>AP</i> : <i>PB</i> = 1 : 3, then <i>AB</i> has 4 equal parts.</p><p>${V("AP")} = ${F(1,4)}${V("AB")}</p>`},
+  {q:"How do I show parallel or collinear?",a:`<p><b>Parallel:</b> one vector is a multiple of the other, e.g. ${V("PQ")} = 3${V("RS")}.</p><p><b>Collinear:</b> parallel <i>and</i> they share a common point.</p>`},
+  {q:"What is the magnitude of a column vector?",a:`<p>|${C("<i>x</i>","<i>y</i>")}| = √(<i>x</i>² + <i>y</i>²)</p>`}],
+ errs:["Getting the direction wrong. "+V("AB")+" = "+B("b")+" − "+B("a")+", not "+B("a")+" − "+B("b")+".","A ratio of 1 : 3 means "+F(1,4)+" of the line, not "+F(1,3)+".","Saying points are collinear without stating the common point."],
+ qs:[
+  {type:"mcq",dia:"vecOAB",q:V("OA")+" = "+B("a")+" and "+V("OB")+" = "+B("b")+". Find "+V("AB")+".",
+   opts:[B("b")+" − "+B("a"),B("a")+" − "+B("b"),B("a")+" + "+B("b"),"−"+B("a")+" − "+B("b")],
+   hint:"To go from <i>A</i> to <i>B</i>, can you travel through <i>O</i>? Which vector takes you from <i>A</i> back to <i>O</i>?",
+   sol:[V("AB")+" = "+V("AO")+" + "+V("OB"),"= −"+B("a")+" + "+B("b"),"= "+B("b")+" − "+B("a")]},
+  {type:"mcq",dia:"vecOAB",q:"<i>P</i> lies on <i>AB</i> so that <i>AP</i> : <i>PB</i> = 1 : 3. Find "+V("OP")+".",
+   opts:[F(3,4)+B("a")+" + "+F(1,4)+B("b"),F(1,4)+B("a")+" + "+F(3,4)+B("b"),F(2,3)+B("a")+" + "+F(1,3)+B("b"),F(1,3)+B("a")+" + "+F(2,3)+B("b")],
+   hint:"How many equal parts is <i>AB</i> split into? What fraction of "+V("AB")+" is "+V("AP")+"? Start at <i>O</i>, go to <i>A</i>, then along <i>AB</i>.",
+   sol:[V("AP")+" = "+F(1,4)+V("AB")+" = "+F(1,4)+"("+B("b")+" − "+B("a")+")",V("OP")+" = "+V("OA")+" + "+V("AP"),"= "+B("a")+" + "+F(1,4)+B("b")+" − "+F(1,4)+B("a"),"= "+F(3,4)+B("a")+" + "+F(1,4)+B("b")]},
+  {type:"num",q:"Find the magnitude of "+C("5","−12")+".",ans:13,unit:"units",
+   hint:"Which theorem links the two parts of a vector to its length?",
+   sol:["|"+C("5","−12")+"| = √(5² + (−12)²)","= √(25 + 144)","= √169","= 13 units"]}],
+ items:["I can write a vector in terms of <b>a</b> and <b>b</b> by following a route.","I can use a ratio to split a line, e.g. if <i>OP</i> : <i>PB</i> = 2 : 3, then <i>OP</i> = "+F("2","5")+"<i>OB</i>.","I can show two vectors are parallel (one is a multiple of the other).","I can show three points are collinear (parallel and share a point).","I can find a ratio of lengths or areas using vectors.","I can find the magnitude of a column vector."]},
+
+{id:"real",tier:0,t:"Real-world final question",why:"Guaranteed. It is always the last question.",
+ cards:[
+  {q:"How do I add GST?",a:`<p>GST in Singapore is 9%.</p><p>Price with GST = price × 1.09</p><p>Price before GST = total ÷ 1.09</p>`},
+  {q:"What is the compound interest formula?",a:`<p>Total amount = <i>P</i>(1 + ${F("<i>r</i>","100")})<sup><i>n</i></sup></p><p><i>n</i> = number of years. It is on the formula sheet.</p><p>Interest = total amount − <i>P</i></p>`},
+  {q:"How do I change a volume into litres?",a:`<p>1 m³ = 1000 litres</p><p>1000 cm³ = 1 litre</p>`},
+  {q:"How do I compare two deals?",a:`<p>Work out the total cost (or cost per unit) for each.</p><p>The lower one is better value.</p><p>End with a sentence, e.g. "Plan A is cheaper by $1."</p>`}],
+ errs:["Removing GST by multiplying by 0.91. Divide by 1.09 instead.","Giving the total amount when the question asks for the interest only.","Mixing cm and m in one volume calculation. Convert first.","Doing all the maths but never stating the decision."],
+ qs:[
+  {type:"num",q:"A laptop costs $1250 before 9% GST. How much does it cost with GST?",ans:1362.5,tol:.01,unit:"$",pre:true,
+   hint:"Altogether, what percentage of the price do you pay: 100% plus what?",
+   sol:["Price with GST = 109% of $1250","= 1.09 × 1250","= $1362.50"]},
+  {type:"num",q:"Mei invests $5000 at 2.5% per year compound interest. How much does she have after 3 years? Give your answer to the nearest cent.",ans:5384.45,tol:.011,unit:"$",pre:true,
+   hint:"In the formula, what are <i>P</i>, <i>r</i> and <i>n</i> here? Is the question asking for the total amount or only the interest?",
+   sol:["Total = 5000(1 + "+F("2.5","100")+")³","= 5000(1.025)³","= $5384.45"]},
+  {type:"num",q:"A fish tank is 1.2 m long, 0.8 m wide and 0.5 m tall. How many litres of water can it hold?",ans:480,tol:.5,unit:"litres",
+   hint:"What is the volume in m³ first? How many litres are in 1 m³?",
+   sol:["Volume = 1.2 × 0.8 × 0.5","= 0.48 m³","= 0.48 × 1000 litres","= 480 litres"]},
+  {type:"mcq",q:"Plan A costs $30 a month plus $0.10 per GB. Plan B costs $36 a month with unlimited data. Siti uses 50 GB a month. Which plan is cheaper for her?",
+   opts:["Plan A, by $1","Plan B, by $1","Plan A, by $6","Both cost the same"],
+   hint:"What is Plan A's total for 50 GB? How does it compare with Plan B?",
+   sol:["Plan A = 30 + 0.10 × 50","= $35","Plan B = $36","Plan A is cheaper by $1."]}],
+ items:["I can pick out the key numbers and conditions from a long question.","I can work with percentages: discount, GST, profit and loss, compound interest, depreciation.","I can compare plans or deals and find the better value.","I can convert units, e.g. 1 m³ = 1000 litres and km/h to m/s.","I can find areas and volumes of real objects (tanks, rooms, packaging).","I can make a decision and support it with my calculated numbers.","I can state any assumption I made."]},
+
+/* ---------------- LIKELY ---------------- */
+{id:"mens",tier:1,t:"Mensuration and radians",why:"Paper 1 Q25 used degrees. Paper 2 often uses radians.",
+ cards:[
+  {q:"How do I change degrees into radians?",a:`<p>π rad = 180°</p><p>radians = degrees × ${F("π","180")}</p>`},
+  {q:"What are the arc length and sector area formulas?",a:`<p>Arc length = <i>rθ</i></p><p>Sector area = ${F(1,2)}<i>r</i>²<i>θ</i></p><p><i>θ</i> must be in radians.</p>`},
+  {q:"How do I find the area of a segment?",a:`<p>Segment = sector − triangle</p><p>= ${F(1,2)}<i>r</i>²<i>θ</i> − ${F(1,2)}<i>r</i>² sin <i>θ</i></p>`},
+  {q:"Which solid formulas do I need?",a:`<p>Cone: <i>V</i> = ${F(1,3)}π<i>r</i>²<i>h</i></p><p>Sphere: <i>V</i> = ${F(4,3)}π<i>r</i>³, SA = 4π<i>r</i>²</p><p>Hemisphere: <i>V</i> = ${F(2,3)}π<i>r</i>³</p><p>Cylinder: <i>V</i> = π<i>r</i>²<i>h</i>, curved SA = 2π<i>rh</i></p>`}],
+ errs:["Using degrees in <i>rθ</i> or "+F(1,2)+"<i>r</i>²<i>θ</i>. Change to radians first.","Finding sin <i>θ</i> in DEG mode when <i>θ</i> is in radians. Switch to RAD.","A solid hemisphere's total surface area needs the flat circle too: 2π<i>r</i>² + π<i>r</i>² = 3π<i>r</i>².","Mixing up the slant height <i>l</i> and the vertical height <i>h</i> of a cone."],
+ qs:[
+  {type:"num",q:"Convert 150° to radians. Give your answer correct to 3 significant figures.",ans:2.62,tol:.006,unit:"rad",
+   hint:"How many degrees make π radians? What fraction of 180° is 150°?",
+   sol:["150° = 150 × "+F("π","180"),"= "+F("5π","6"),"= 2.62 rad (3 s.f.)"]},
+  {type:"num",dia:"sector",q:"A sector has radius 8 cm and angle 1.2 radians. Find its area.",ans:38.4,tol:.05,unit:"cm²",
+   hint:"Is <i>θ</i> already in radians? Which formula has <i>r</i>² in it?",
+   sol:["Area = "+F(1,2)+" × 8² × 1.2","= 32 × 1.2","= 38.4 cm²"]},
+  {type:"num",dia:"sector",q:"Find the area of the segment between the dashed chord and the arc.",ans:8.57,tol:.02,unit:"cm²",
+   hint:"What do you need to take away from the sector to leave only the segment? Is your calculator in RAD mode?",
+   sol:["Triangle = "+F(1,2)+" × 8² × sin 1.2","= 29.825… cm²","Segment = 38.4 − 29.825…","= 8.57 cm² (3 s.f.)"]},
+  {type:"num",q:"Find the volume of a solid hemisphere with radius 6 cm.",ans:452,tol:.6,unit:"cm³",
+   hint:"A hemisphere is half a sphere. What is half of "+F(4,3)+"?",
+   sol:["<i>V</i> = "+F(2,3)+" × π × 6³","= 144π","= 452 cm³ (3 s.f.)"]}],
+ items:["I can convert between degrees and radians (π rad = 180°).","I can find arc length <i>s</i> = <i>rθ</i> and sector area "+F("1","2")+"<i>r</i>²<i>θ</i>, with <i>θ</i> in radians.","I can find a segment area: sector area − triangle area.","I can find the volume and surface area of a cone, sphere, hemisphere, cylinder and pyramid.","I can split a composite solid into simple parts.","I can tell whether a surface area should include the base or not."]},
+
+{id:"seq",tier:1,t:"Number patterns",why:"Not in Paper 1. Practise with Start Now #34(A).",
+ cards:[
+  {q:"How do I find the nth term? (Method A)",a:`<p><i>T<sub>n</sub></i> = <i>dn</i> + <i>c</i></p><p>Find <i>d</i>, then put <i>n</i> = 1 to find <i>c</i>.</p>`},
+  {q:"How do I find the nth term? (Method B)",a:`<p><i>T<sub>n</sub></i> = <i>T</i><sub>1</sub> + (<i>n</i> − 1)<i>d</i></p><p>Expand the brackets and simplify.</p>`},
+  {q:"How do I check if a number is in the sequence?",a:`<p>Set <i>T<sub>n</sub></i> equal to the number.</p><p>Solve for <i>n</i>.</p><p>If <i>n</i> is not a whole number, it is not a term.</p>`}],
+ errs:["Writing <i>T<sub>n</sub></i> = <i>n</i> + <i>d</i>. The <i>d</i> goes in front of <i>n</i>: <i>T<sub>n</sub></i> = <i>dn</i> + <i>c</i>.","Using the first term <i>T</i><sub>1</sub> as the value of <i>c</i>.","Saying a value is a term without checking that <i>n</i> is a whole number."],
+ qs:[
+  {type:"mcq",q:"Find the <i>n</i>th term of 7, 12, 17, 22, …",opts:["5<i>n</i> + 2","5<i>n</i> + 7","7<i>n</i> + 5","<i>n</i> + 5"],
+   hint:"How much is added each time? If <i>T<sub>n</sub></i> = 5<i>n</i> + <i>c</i>, what must <i>c</i> be so that <i>T</i><sub>1</sub> = 7?",
+   sol:["<i>d</i> = 12 − 7 = 5","<i>T<sub>n</sub></i> = 5<i>n</i> + <i>c</i>","<i>T</i><sub>1</sub> = 7: 5(1) + <i>c</i> = 7","<i>c</i> = 2","<i>T<sub>n</sub></i> = 5<i>n</i> + 2"]},
+  {type:"num",q:"Using <i>T<sub>n</sub></i> = 5<i>n</i> + 2, find <i>T</i><sub>40</sub>.",ans:202,
+   hint:"Which value of <i>n</i> do you substitute?",sol:["<i>T</i><sub>40</sub> = 5(40) + 2","= 202"]},
+  {type:"num",q:"Which term of the sequence is 157? (Find <i>n</i>.)",ans:31,
+   hint:"Set 5<i>n</i> + 2 equal to 157. How do you get <i>n</i> on its own?",sol:["5<i>n</i> + 2 = 157","5<i>n</i> = 155","<i>n</i> = 31"]},
+  {type:"mcq",q:"Is 300 a term of this sequence?",opts:["No, because <i>n</i> = 59.6","Yes, it is the 60th term","Yes, it is the 59th term","No, because 300 is even"],
+   hint:"Solve 5<i>n</i> + 2 = 300. Is your <i>n</i> a whole number?",
+   sol:["5<i>n</i> + 2 = 300","5<i>n</i> = 298","<i>n</i> = 59.6","<i>n</i> is not a whole number, so 300 is not a term."]}],
+ items:["I can find the common difference <i>d</i>.","I can write the formula <i>T<sub>n</sub></i> = <i>dn</i> + <i>c</i>, or <i>T<sub>n</sub></i> = <i>T</i><sub>1</sub> + (<i>n</i> − 1)<i>d</i>.","I can find a term far along, e.g. Pattern 55.","I can find which pattern gives a certain value by solving <i>T<sub>n</sub></i> = value.","I can explain why a value is impossible (<i>n</i> is not a whole number).","I can spot square, cube and triangular number patterns."]},
+
+{id:"stats",tier:1,t:"Statistics",why:"Paper 1 Q26 only tested standard deviation as an idea.",
+ cards:[
+  {q:"How do I find the mean of grouped data?",a:`<p>Use the mid-value <i>x</i> of each class.</p><p>Mean = ${F("Σ<i>fx</i>","Σ<i>f</i>")}</p>`},
+  {q:"How do I find the standard deviation?",a:`<p>s.d. = √(${F("Σ<i>fx</i>²","Σ<i>f</i>")} − (${F("Σ<i>fx</i>","Σ<i>f</i>")})²)</p><p>It is on the formula sheet. You can also use your calculator's statistics mode.</p>`},
+  {q:"How do I compare two sets of data?",a:`<p><b>Mean or median:</b> which is higher on average?</p><p><b>s.d. or IQR:</b> which is more consistent (smaller spread)?</p><p>Quote the numbers and use the context.</p>`},
+  {q:"How do I read a cumulative frequency curve?",a:`<p>Median: read across at ${F(1,2)} of the total.</p><p>Lower quartile at ${F(1,4)}, upper quartile at ${F(3,4)}.</p><p>IQR = upper quartile − lower quartile</p>`}],
+ errs:["Using the class boundaries (10, 20) instead of the mid-value (15).","Dividing by the number of classes instead of Σ<i>f</i>.","Writing \"B is more consistent\" without quoting the s.d. or IQR.","A larger s.d. means <b>less</b> consistent, not more."],
+ qs:[
+  {type:"num",q:"The table shows the time, <i>t</i> minutes, that 20 students spent on homework. Calculate the mean time."+homeworkTable,ans:28,unit:"minutes",
+   hint:"What is the mid-value of each class? Then what is Σ<i>fx</i>?",
+   sol:["Mid-values: 15, 25, 35","Σ<i>fx</i> = 15(4) + 25(6) + 35(10)","= 60 + 150 + 350 = 560","Mean = "+F(560,20),"= 28 minutes"]},
+  {type:"num",q:"Using the same table, calculate the standard deviation."+homeworkTable,ans:7.81,tol:.01,unit:"minutes",
+   hint:"You need Σ<i>fx</i>² as well. After dividing by Σ<i>f</i>, did you subtract the mean squared?",
+   sol:["Σ<i>fx</i>² = 15²(4) + 25²(6) + 35²(10)","= 900 + 3750 + 12250 = 16900","s.d. = √("+F(16900,20)+" − 28²)","= √(845 − 784)","= √61","= 7.81 minutes (3 s.f.)"]},
+  {type:"mcq",q:"Class A: mean 62, s.d. 8. Class B: mean 62, s.d. 15. Which statement is correct?",
+   opts:["Class A's marks are more consistent.","Class B's marks are more consistent.","Class A did better on average.","Class B did better on average."],
+   hint:"The means are equal, so what does the s.d. tell you? Is a smaller spread more or less consistent?",
+   sol:["Both means are 62, so on average they did equally well.","Class A has the smaller s.d. (8 < 15).","Class A's marks are more consistent."]}],
+ items:["I can find the mean and standard deviation of grouped data using my calculator.","I can compare two sets of data using the mean (on average) and standard deviation (consistency).","I can read the median, quartiles and interquartile range from a cumulative frequency curve.","I can read percentiles and answer \"how many scored more than…\" from the curve.","I can draw or read a box-and-whisker plot."]},
+
+{id:"alg",tier:1,t:"Algebra skills",why:"Paper 2 often opens with a mixed algebra question.",
+ cards:[
+  {q:"How do I change the subject of a formula?",a:`<p>Undo the operations in reverse order.</p><p>Do the same thing to both sides.</p><p>If the subject is squared, square-root last.</p>`},
+  {q:"What is the difference of two squares?",a:`<p><i>a</i>² − <i>b</i>² = (<i>a</i> + <i>b</i>)(<i>a</i> − <i>b</i>)</p>`},
+  {q:"What are the laws of indices?",a:`<p><i>a<sup>m</sup></i> × <i>a<sup>n</sup></i> = <i>a</i><sup><i>m</i> + <i>n</i></sup></p><p><i>a<sup>m</sup></i> ÷ <i>a<sup>n</sup></i> = <i>a</i><sup><i>m</i> − <i>n</i></sup></p><p><i>a</i><sup>−<i>n</i></sup> = ${F(1,"<i>a<sup>n</sup></i>")}</p><p><i>a</i><sup>${F(1,"<i>n</i>")}</sup> = <sup><i>n</i></sup>√<i>a</i></p>`}],
+ errs:["(<i>a</i> + <i>b</i>)² is not <i>a</i>² + <i>b</i>². It is <i>a</i>² + 2<i>ab</i> + <i>b</i>².","Cancelling terms instead of factors. Factorise first, then cancel.","A negative index means \"one over\", not a negative answer."],
+ qs:[
+  {type:"mcq",q:"Make <i>r</i> the subject of <i>V</i> = "+F("π<i>r</i>²<i>h</i>","3")+".",
+   opts:["<i>r</i> = √("+F("3<i>V</i>","π<i>h</i>")+")","<i>r</i> = "+F("3<i>V</i>","π<i>h</i>"),"<i>r</i> = √("+F("<i>V</i>","3π<i>h</i>")+")","<i>r</i> = √("+F("π<i>h</i>","3<i>V</i>")+")"],
+   hint:"What is the last thing done to <i>r</i>? Undo the ÷ 3 first, then the × π<i>h</i>. What is left to undo?",
+   sol:["3<i>V</i> = π<i>r</i>²<i>h</i>","<i>r</i>² = "+F("3<i>V</i>","π<i>h</i>"),"<i>r</i> = √("+F("3<i>V</i>","π<i>h</i>")+")"]},
+  {type:"mcq",q:"Simplify "+F("<i>x</i>² − 9","<i>x</i>² + <i>x</i> − 6")+".",
+   opts:[F("<i>x</i> − 3","<i>x</i> − 2"),F("<i>x</i> + 3","<i>x</i> − 2"),F("<i>x</i> − 3","<i>x</i> + 2"),F("−9","<i>x</i> − 6")],
+   hint:"Can the top be factorised as a difference of two squares? Which two numbers multiply to −6 and add to 1?",
+   sol:["<i>x</i>² − 9 = (<i>x</i> + 3)(<i>x</i> − 3)","<i>x</i>² + <i>x</i> − 6 = (<i>x</i> + 3)(<i>x</i> − 2)","Cancel the common factor (<i>x</i> + 3):",F("<i>x</i> − 3","<i>x</i> − 2")]},
+  {type:"num",q:"Evaluate 16<sup>−"+F(3,4)+"</sup>. Give your answer as a fraction or a decimal.",ans:.125,tol:.0005,
+   hint:"What does the negative sign tell you to do? What is the 4th root of 16?",
+   sol:["16<sup>−"+F(3,4)+"</sup> = "+F(1,"16<sup>"+F(3,4)+"</sup>"),"= "+F(1,"(⁴√16)³"),"= "+F(1,"2³"),"= "+F(1,8)]}],
+ items:["I can change the subject of a formula, including squares and square roots.","I can expand and factorise, including difference of two squares.","I can simplify algebraic fractions by factorising first.","I can solve simultaneous equations.","I can use the laws of indices, including negative and fractional indices."]},
+
+{id:"coord",tier:1,t:"Coordinate geometry",why:"Like 2023 P2 Q9: a parallelogram on a grid.",
+ cards:[
+  {q:"How do I find the gradient of a line?",a:`<p><i>m</i> = ${F("<i>y</i>₂ − <i>y</i>₁","<i>x</i>₂ − <i>x</i>₁")}</p>`},
+  {q:"How do I find the equation of a line?",a:`<p><i>y</i> = <i>mx</i> + <i>c</i></p><p>Find <i>m</i> first.</p><p>Substitute one point to find <i>c</i>.</p>`},
+  {q:"How do I find the length of a line segment?",a:`<p>Length = √((<i>x</i>₂ − <i>x</i>₁)² + (<i>y</i>₂ − <i>y</i>₁)²)</p>`},
+  {q:"How do I find the 4th vertex of parallelogram ABCD?",a:`<p>Opposite sides are equal and parallel.</p><p>The move from <i>B</i> to <i>C</i> is the same as the move from <i>A</i> to <i>D</i>.</p>`}],
+ errs:["Subtracting in a different order on the top and the bottom of the gradient.","Putting the <i>x</i> change on top and the <i>y</i> change on the bottom.","Stopping at the gradient and forgetting to find <i>c</i>."],
+ qs:[
+  {type:"num",q:"<i>A</i> is (1, 3) and <i>B</i> is (5, 11). Find the gradient of <i>AB</i>.",ans:2,
+   hint:"How much does <i>y</i> change from <i>A</i> to <i>B</i>? How much does <i>x</i> change?",
+   sol:["<i>m</i> = "+F("11 − 3","5 − 1"),"= "+F(8,4),"= 2"]},
+  {type:"num",q:"The equation of <i>AB</i> is <i>y</i> = 2<i>x</i> + <i>c</i>. Find <i>c</i>.",ans:1,
+   hint:"Point <i>A</i> lies on the line. What happens if you substitute its <i>x</i> and <i>y</i>?",
+   sol:["Substitute <i>A</i>(1, 3):","3 = 2(1) + <i>c</i>","<i>c</i> = 1"]},
+  {type:"num",q:"Find the length of <i>AB</i>.",ans:8.94,tol:.01,unit:"units",
+   hint:"Draw a right-angled triangle from <i>A</i> to <i>B</i>. How long is each of the two shorter sides?",
+   sol:["<i>AB</i> = √((5 − 1)² + (11 − 3)²)","= √(16 + 64)","= √80","= 8.94 units (3 s.f.)"]},
+  {type:"mcq",dia:"grid",q:"<i>ABCD</i> is a parallelogram. Find the coordinates of <i>D</i>.",
+   opts:["(3, 4)","(9, 6)","(4, 3)","(3, 5)"],
+   hint:"How do you move from <i>B</i> to <i>C</i>? Should the move from <i>A</i> to <i>D</i> be the same?",
+   sol:["<i>B</i> to <i>C</i>: right 2, up 3","<i>A</i> to <i>D</i> is the same move.","<i>D</i> = (1 + 2, 1 + 3)","<i>D</i> = (3, 4)"]}],
+ items:["I can find the gradient and the equation <i>y</i> = <i>mx</i> + <i>c</i> of a line.","I can find the length of a line segment.","I can use parallel lines having the same gradient.","I can find a missing vertex of a parallelogram.","I can find the area of a shape drawn on a grid.","I can find an angle using the gradient and tan."]},
+
+/* ---------------- POSSIBLE ---------------- */
+{id:"prob",tier:2,t:"Probability",why:"Paper 1 Q19 tested \"exactly 2 red\".",
+ cards:[
+  {q:"When do I multiply and when do I add?",a:`<p><b>Multiply</b> along a branch (this <i>and then</i> that).</p><p><b>Add</b> different outcomes (this <i>or</i> that).</p>`},
+  {q:"What changes when there is no replacement?",a:`<p>After each pick, the total goes down by 1.</p><p>The count of the colour you picked also goes down by 1.</p>`},
+  {q:"What is the \"at least one\" shortcut?",a:`<p>P(at least one) = 1 − P(none)</p>`}],
+ errs:["Keeping the same denominator when there is no replacement.","Adding along a branch instead of multiplying.","For \"one of each\", forgetting the second order (blue then red)."],
+ qs:[
+  {type:"num",q:"A bag has 5 red and 3 blue balls. Two balls are taken out without replacement. Find P(both red). Give your answer as a fraction.",ans:5/14,tol:.002,
+   hint:"What is P(red) on the first pick? After one red ball is gone, how many reds and how many balls are left?",
+   sol:["P(R, R) = "+F(5,8)+" × "+F(4,7),"= "+F(20,56),"= "+F(5,14)]},
+  {type:"num",q:"Using the same bag, find P(one red and one blue).",ans:15/28,tol:.002,
+   hint:"There are two orders: red then blue, or blue then red. Did you include both?",
+   sol:["P(R, B) = "+F(5,8)+" × "+F(3,7)+" = "+F(15,56),"P(B, R) = "+F(3,8)+" × "+F(5,7)+" = "+F(15,56),"Total = "+F(30,56),"= "+F(15,28)]},
+  {type:"num",q:"Find P(at least one blue).",ans:9/14,tol:.002,
+   hint:"What is the opposite of \"at least one blue\"? Have you already found that probability?",
+   sol:["P(at least one blue) = 1 − P(both red)","= 1 − "+F(5,14),"= "+F(9,14)]}],
+ items:["I can draw and use a tree diagram, with and without replacement.","I can use a possibility diagram for two dice or spinners.","I can use P(at least one) = 1 − P(none).","I know when to multiply (and) and when to add (or)."]},
+
+{id:"sim",tier:2,t:"Similarity and congruence",why:"Paper 1 Q24 proved similar triangles.",
+ cards:[
+  {q:"How do I prove two triangles are similar?",a:`<p>Show 2 pairs of equal angles (AA).</p><p>Give a reason for each, e.g. vert. opp. ∠s, alt. ∠s, common ∠.</p>`},
+  {q:"What are the congruence tests?",a:`<p>SSS, SAS, ASA (or AAS), RHS</p>`},
+  {q:"How do areas and volumes scale?",a:`<p>If lengths are in the ratio <i>k</i>:</p><p>areas are in the ratio <i>k</i>²</p><p>volumes are in the ratio <i>k</i>³</p>`}],
+ errs:["Using the length ratio for areas or volumes.","Matching the wrong vertices. Write the letters in corresponding order.","Stating equal angles without a reason."],
+ qs:[
+  {type:"num",q:"Two similar triangles have corresponding sides of 4 cm and 10 cm. The smaller triangle has an area of 12 cm². Find the area of the larger triangle.",ans:75,unit:"cm²",
+   hint:"What is the length ratio? For area, do you square it or cube it?",
+   sol:["Length ratio = "+F(10,4)+" = "+F(5,2),"Area ratio = ("+F(5,2)+")² = "+F(25,4),"Area = 12 × "+F(25,4),"= 75 cm²"]},
+  {type:"num",q:"Two similar cones have heights of 6 cm and 9 cm. The smaller cone has a volume of 80 cm³. Find the volume of the larger cone.",ans:270,unit:"cm³",
+   hint:"What is the length ratio? Which power do you use for volume?",
+   sol:["Length ratio = "+F(9,6)+" = "+F(3,2),"Volume ratio = ("+F(3,2)+")³ = "+F(27,8),"<i>V</i> = 80 × "+F(27,8),"= 270 cm³"]}],
+ items:["I can prove two triangles are similar with a reason for each statement.","I can use the congruence tests SSS, SAS, ASA and RHS.","I can use area ratio = (length ratio)².","I can use volume ratio = (length ratio)³."]},
+
+{id:"angles",tier:2,t:"Angle properties and circles",why:"Paper 1 Q3 and Q18 covered circles.",
+ cards:[
+  {q:"What are the polygon angle facts?",a:`<p>Sum of interior angles = (<i>n</i> − 2) × 180°</p><p>Sum of exterior angles = 360°</p><p>Regular polygon: each exterior angle = ${F("360°","<i>n</i>")}</p>`},
+  {q:"Which circle properties do I need?",a:`<p>Angle in a semicircle = 90°</p><p>Tangent ⊥ radius</p><p>∠ at centre = 2 × ∠ at circumference</p><p>∠s in the same segment are equal</p><p>Opposite ∠s in a cyclic quad add to 180°</p><p>Tangents from an external point are equal</p>`}],
+ errs:["Mixing up the angle at the centre with the angle at the circumference.","Using a circle property when the point is not on the circle.","Leaving out the reason. Reasons carry marks."],
+ qs:[
+  {type:"num",q:"Find each interior angle of a regular 12-sided polygon.",ans:150,unit:"°",
+   hint:"Can you find each exterior angle first? How are an interior angle and its exterior angle related?",
+   sol:["Exterior angle = "+F("360°",12)+" = 30°","Interior angle = 180° − 30°","= 150°"]},
+  {type:"num",q:"Each exterior angle of a regular polygon is 24°. How many sides does it have?",ans:15,
+   hint:"All the exterior angles add up to what? How many 24° angles fit into that?",
+   sol:["<i>n</i> = "+F("360°","24°"),"= 15"]},
+  {type:"num",q:"<i>ABCD</i> is a cyclic quadrilateral. Angle <i>ABC</i> = 108°. Find angle <i>ADC</i>.",ans:72,unit:"°",
+   hint:"Are <i>B</i> and <i>D</i> opposite each other? What do opposite angles in a cyclic quadrilateral add up to?",
+   sol:["∠<i>ADC</i> = 180° − 108° (opp. ∠s in cyclic quad)","= 72°"]}],
+ items:["I can find interior and exterior angles of polygons.","I can use circle properties: angle in a semicircle, tangent ⊥ radius, angles in the same segment, cyclic quadrilateral.","I can write the correct geometric reason for each step."]},
+
+{id:"kin",tier:2,t:"Graphs in practical situations",why:"Can appear inside the real-world question.",
+ cards:[
+  {q:"What does a distance–time graph tell me?",a:`<p>Gradient = speed</p><p>A flat line means not moving.</p>`},
+  {q:"What does a speed–time graph tell me?",a:`<p>Gradient = acceleration</p><p>Area under the graph = distance travelled</p><p>Negative gradient = deceleration</p>`}],
+ errs:["Finding the gradient when the question asks for distance. Distance is the area.","Using the wrong area formula for a triangle or trapezium.","Mixing units, e.g. km/h with seconds. Convert first."],
+ qs:[
+  {type:"num",dia:"speed",q:"The speed–time graph shows a car's journey. Find its acceleration in the first 4 seconds.",ans:3,unit:"m/s²",
+   hint:"Is acceleration a gradient or an area? What are the rise and the run for the first part?",
+   sol:["Acceleration = "+F("12 − 0","4 − 0"),"= 3 m/s²"]},
+  {type:"num",dia:"speed",q:"Find the total distance travelled.",ans:180,unit:"m",
+   hint:"What shape is the area under the whole graph? Can you split it into simpler shapes?",
+   sol:["Distance = area under graph","= "+F(1,2)+" × 4 × 12 + 10 × 12 + "+F(1,2)+" × 6 × 12","= 24 + 120 + 36","= 180 m"]}],
+ items:["I can find speed from the gradient of a distance–time graph.","I can find distance from the area under a speed–time graph.","I can find acceleration from the gradient of a speed–time graph.","I can read a conversion graph."]},
+
+/* ---------------- QUICK CHECK ---------------- */
+{id:"p1",tier:3,t:"Paper 1 topics",why:"Already tested in Paper 1. Spend a few minutes on each to stay sharp.",
+ cards:[
+  {q:"HCF or LCM: which powers do I take?",a:`<p><b>HCF:</b> the lowest power of each common prime.</p><p><b>LCM:</b> the highest power of every prime.</p>`},
+  {q:"When does an inequality sign flip?",a:`<p>When you multiply or divide both sides by a negative number.</p>`},
+  {q:"What is the difference between direct and inverse variation?",a:`<p>Direct: <i>y</i> = <i>kx</i></p><p>Inverse: <i>y</i> = ${F("<i>k</i>","<i>x</i>")}</p><p>Find <i>k</i> first.</p>`}],
+ errs:["Forgetting to flip the inequality sign when dividing by a negative.","Standard form is <i>A</i> × 10<sup><i>n</i></sup> with 1 ≤ <i>A</i> < 10. 45 × 10⁻⁵ is not standard form."],
+ qs:[
+  {type:"num",q:"Find the HCF of 84 and 120.",ans:12,
+   hint:"Write each number as a product of primes. Which primes do both share, and at what lowest power?",
+   sol:["84 = 2² × 3 × 7","120 = 2³ × 3 × 5","HCF = 2² × 3","= 12"]},
+  {type:"num",q:"<i>y</i> is inversely proportional to <i>x</i>. When <i>x</i> = 4, <i>y</i> = 6. Find <i>y</i> when <i>x</i> = 8.",ans:3,
+   hint:"Write <i>y</i> = "+F("<i>k</i>","<i>x</i>")+". Can you find <i>k</i> first?",
+   sol:["<i>y</i> = "+F("<i>k</i>","<i>x</i>"),"6 = "+F("<i>k</i>",4),"<i>k</i> = 24","<i>y</i> = "+F(24,8),"= 3"]},
+  {type:"num",q:"Find the largest integer <i>x</i> that satisfies 7 − 2<i>x</i> > 1.",ans:2,
+   hint:"When you divide both sides by −2, what happens to the sign? Is the boundary value itself allowed?",
+   sol:["7 − 2<i>x</i> > 1","−2<i>x</i> > −6","<i>x</i> < 3","Largest integer: <i>x</i> = 2"]},
+  {type:"mcq",q:"Write 0.00045 in standard form.",opts:["4.5 × 10⁻⁴","4.5 × 10⁻⁵","45 × 10⁻⁵","4.5 × 10⁴"],
+   hint:"Move the decimal point so there is one non-zero digit in front of it. How many places did you move it, and which way?",
+   sol:["0.00045 = 4.5 ÷ 10 000","= 4.5 × 10⁻⁴"]}],
+ items:["I can find HCF and LCM using prime factors.","I can use set notation and Venn diagrams.","I can work with standard form.","I can solve linear inequalities (flip the sign when dividing by a negative).","I can work with ratios and combine two ratios.","I can solve direct and inverse variation problems.","I can use maps and scales."]}
+];
+
+/* ---------- state ---------- */
+const KEY="p2rev-v2";
+let ST8={r:{},q:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&s.r&&s.q)ST8=s;
+  else{const old=JSON.parse(localStorage.getItem("p2checklist-v1")||"null");if(old)ST8.r=old}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(ST8))}catch(e){}};
+
+function parseStudentNumber(raw){
+  let s=String(raw||"").trim().replace(/[−‒–—―﹣－]/g,"-");
+  if(s.includes("."))s=s.replace(/,/g,"");else if(/,\d{3}(\D|$)/.test(s))s=s.replace(/,/g,"");else s=s.replace(/,/g,".");
+  s=s.replace(/[^0-9.\-\/]/g,"");
+  if(!s)return NaN;
+  if(s.includes("/")){const[a,b]=s.split("/");const x=parseFloat(a),y=parseFloat(b);return y?x/y:NaN}
+  return parseFloat(s);
+}
+
+/* ---------- render ---------- */
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const topicsEl=document.getElementById("topics"),navEl=document.getElementById("nav");
+let QINDEX={},TOTALQ=0;
+
+function renderAll(){
+  let nav="",html="",lastTier=-1;
+  TOPICS.forEach(tp=>{
+    const tr=TIERS[tp.tier];
+    if(tp.tier!==lastTier){nav+=`<div class="nav-tier" style="--tc:${tr.color}">${tr.name}</div>`;lastTier=tp.tier}
+    nav+=`<a href="#${tp.id}" data-t="${tp.id}" style="--tc:${tr.color}"><span class="nm">${tp.t}</span><span class="ct" id="ct-${tp.id}"></span></a>`;
+    html+=`<section class="topic" id="${tp.id}" data-name="${tp.t.replace(/"/g,"&quot;")}" style="--tc:${tr.color}">
+      <span class="tier-tag${tr.dark?" dark":""}">${tr.name}</span>
+      <h2>${tp.t}</h2><p class="why">${tp.why}</p>
+      <div class="part">Key ideas <small>tap to flip</small></div>
+      <div class="cards">${tp.cards.map((c,i)=>`<button class="card${c.wide?" wide":""}" aria-label="Flip card: ${c.q.replace(/<[^>]+>/g,"")}"><span class="card-in"><span class="face front"><span class="qq">${c.q}</span><span class="tap">Tap to reveal</span></span><span class="face back">${c.a}<span class="tap">Tap to hide</span></span></span></button>`).join("")}</div>
+      <div class="part">Watch out</div>
+      <div class="errs">${tp.errs.map(e=>`<div class="err">${e}</div>`).join("")}</div>
+      <div class="part">Practice <small>2 tries each</small></div>
+      ${tp.qs.map((q,i)=>qHTML(tp,q,i)).join("")}
+      <div class="part">Rate yourself</div>
+      <div class="rate"><div class="key"><span><span class="dot sm"></span>Not yet</span><span><span class="dot sm h"></span>Getting there</span><span><span class="dot sm s"></span>Confident</span></div>
+        ${tp.items.map((it,i)=>{const id=tp.id+"-"+i;return `<button class="item" data-id="${id}" data-s="${ST8.r[id]||0}"><span class="dot"></span><span class="txt">${it}</span></button>`}).join("")}
+      </div>
+    </section>`;
+  });
+  navEl.innerHTML=nav;topicsEl.innerHTML=radicals(html);
+  TOPICS.forEach(tp=>tp.qs.forEach((q,i)=>restoreQ(tp.id+"_"+i)));
+  updateStats();
+}
+function qHTML(tp,q,i){
+  const qid=tp.id+"_"+i;QINDEX[qid]=q;TOTALQ++;
+  let body=`<p class="qtext">${q.q}</p>`;
+  if(q.dia)body+=`<div class="dia">${DIA[q.dia]}</div>`;
+  if(q.type==="num"){
+    const pre=q.pre?`<span class="unit">${q.unit}</span>`:"";const post=q.unit&&!q.pre?`<span class="unit">${q.unit}</span>`:"";
+    body+=`<div class="ansrow">${pre}<input id="in-${qid}" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Your answer" aria-label="Your answer">${post}<button class="btn" data-check="${qid}">Check</button><button class="hbtn" data-hint="${qid}">💡 Hint</button></div>`;
+  }else{
+    const order=shuffle(q.opts.map((_,k)=>k));
+    body+=`<div class="opts">${order.map((k,n)=>`<button class="opt" data-q="${qid}" data-k="${k}"><span class="lt">${"ABCD"[n]}</span><span>${q.opts[k]}</span></button>`).join("")}</div><div class="ansrow"><button class="hbtn" data-hint="${qid}">💡 Hint</button></div>`;
+  }
+  body+=`<div class="hint" id="h-${qid}" hidden><b>Hint</b>${q.hint}</div><div class="fb" id="fb-${qid}" aria-live="polite"></div><div id="sw-${qid}"></div>`;
+  return `<div class="q" id="q-${qid}"><div class="qhead"><span class="qnum">Q${i+1}</span><span class="qstat" id="qs-${qid}"></span></div>${body}</div>`;
+}
+const solHTML=q=>radicals(`<div class="sol"><b>Full working</b>${q.sol.map(l=>`<span class="ln">${l}</span>`).join("")}</div>`);
+const qs=id=>ST8.q[id]||(ST8.q[id]={a:0,st:"open",pts:0,w:[]});
+
+function restoreQ(id){
+  const s=ST8.q[id];if(!s)return;const q=QINDEX[id];
+  if(q.type==="mcq")s.w.forEach(k=>{const b=document.querySelector(`.opt[data-q="${id}"][data-k="${k}"]`);if(b){b.classList.add("wrong");b.disabled=true}});
+  if(s.st==="right")markRight(id,true);
+  else if(s.st==="rev")markRev(id,true);
+  else if(s.a===1){setFb(id,"no","Not quite. Tap 💡 Hint, then try once more.");setStat(id)}
+}
+function setFb(id,cls,msg){const f=document.getElementById("fb-"+id);f.className="fb "+cls;f.innerHTML=msg}
+function setStat(id){
+  const s=qs(id),el=document.getElementById("qs-"+id),box=document.getElementById("q-"+id);
+  box.classList.toggle("right",s.st==="right");box.classList.toggle("rev",s.st==="rev");
+  el.textContent=s.st==="right"?`✓ ${s.pts} point${s.pts===1?"":"s"}`:s.st==="rev"?(s.done?"✓ answered, no points":"See the working below"):s.a===1?"1 try left":"";
+}
+function markRight(id,restoring){
+  const s=qs(id),q=QINDEX[id];
+  setFb(id,"ok",s.pts===2?"Correct on your first try!":"Correct! Well done for using your second try.");
+  if(q.type==="mcq"){const b=document.querySelector(`.opt[data-q="${id}"][data-k="0"]`);b.classList.add("good");document.querySelectorAll(`.opt[data-q="${id}"]`).forEach(x=>x.disabled=true)}
+  else{const inp=document.getElementById("in-"+id);if(restoring&&s.v)inp.value=s.v;inp.disabled=true;document.querySelector(`[data-check="${id}"]`).disabled=true}
+  const sw=document.getElementById("sw-"+id);sw.innerHTML=`<button class="showsol" data-show="${id}">Show full working</button>`;
+  setStat(id);
+}
+function markRev(id,restoring){
+  const s=qs(id),q=QINDEX[id];
+  if(s.done){
+    setFb(id,"ok","Correct. No points this time, but you got there.");
+    if(q.type==="mcq"){document.querySelector(`.opt[data-q="${id}"][data-k="0"]`).classList.add("good");document.querySelectorAll(`.opt[data-q="${id}"]`).forEach(x=>x.disabled=true)}
+    else{const inp=document.getElementById("in-"+id);if(s.v)inp.value=s.v;inp.disabled=true;document.querySelector(`[data-check="${id}"]`).disabled=true}
+  }else setFb(id,"help","That's 2 tries used. Ask a friend or your teacher to go through this with you. Read the working below, then enter the answer yourself (no points).");
+  document.getElementById("sw-"+id).innerHTML=solHTML(q);
+  setStat(id);
+}
+function attempt(id,correct,val){
+  const s=qs(id);if(s.st==="right")return;
+  if(s.st==="rev"){
+    if(correct){s.done=true;if(val!==undefined)s.v=val;markRev(id)}else setFb(id,"no","Not yet. Check each line of the working above.");
+    save();updateStats();return;
+  }
+  if(correct){s.st="right";s.pts=s.a===0?2:1;if(val!==undefined)s.v=val;markRight(id)}
+  else{
+    s.a++;
+    if(s.a===1){setFb(id,"no","Not quite. Tap 💡 Hint, then try once more.");const hb=document.querySelector(`[data-hint="${id}"]`);hb.classList.remove("nudge");void hb.offsetWidth;hb.classList.add("nudge")}
+    else{s.st="rev";markRev(id)}
+  }
+  setStat(id);save();updateStats();
+}
+
+/* ---------- events ---------- */
+topicsEl.addEventListener("click",e=>{
+  const card=e.target.closest(".card");
+  if(card){card.classList.toggle("flipped");card.classList.add("seen");return}
+  const it=e.target.closest(".item");
+  if(it){const v=((+it.dataset.s)+1)%3;it.dataset.s=v;ST8.r[it.dataset.id]=v;save();updateStats();return}
+  const hb=e.target.closest("[data-hint]");
+  if(hb){const h=document.getElementById("h-"+hb.dataset.hint);h.hidden=!h.hidden;hb.classList.remove("nudge");return}
+  const ck=e.target.closest("[data-check]");
+  if(ck){checkNum(ck.dataset.check);return}
+  const op=e.target.closest(".opt");
+  if(op&&!op.disabled){const id=op.dataset.q,k=+op.dataset.k,s=qs(id);
+    if(k===0)attempt(id,true);
+    else{if(s.st!=="rev"){op.classList.add("wrong");op.disabled=true;s.w.push(k)}attempt(id,false)}
+    return}
+  const sh=e.target.closest("[data-show]");
+  if(sh){const id=sh.dataset.show;document.getElementById("sw-"+id).innerHTML=solHTML(QINDEX[id])}
+});
+topicsEl.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id&&e.target.id.startsWith("in-"))checkNum(e.target.id.slice(3))});
+function checkNum(id){
+  const inp=document.getElementById("in-"+id),q=QINDEX[id],v=parseStudentNumber(inp.value);
+  if(isNaN(v)){setFb(id,"no","Type a number first. Use the maths keys at the bottom for − and /.");return}
+  attempt(id,Math.abs(v-q.ans)<=(q.tol||1e-6),inp.value);
+}
+
+/* ---------- stats + sidebar ---------- */
+function updateStats(){
+  let conf=0,shaky=0,all=0,score=0;
+  TOPICS.forEach(tp=>{
+    let c=0;tp.items.forEach((_,i)=>{const v=ST8.r[tp.id+"-"+i]||0;all++;if(v===2){conf++;c++}if(v===1)shaky++});
+    const el=document.getElementById("ct-"+tp.id);el.textContent=`${c}/${tp.items.length}`;el.classList.toggle("done",c===tp.items.length);
+    tp.qs.forEach((_,i)=>{const s=ST8.q[tp.id+"_"+i];if(s&&s.st==="right")score+=s.pts});
+  });
+  const max=TOTALQ*2;
+  document.getElementById("sConf").textContent=`${conf}/${all}`;
+  document.getElementById("mS").style.width=(conf/all*100)+"%";
+  document.getElementById("mH").style.width=(shaky/all*100)+"%";
+  document.getElementById("sScore").textContent=`${score}/${max}`;
+  document.getElementById("tScore").textContent=`${score}/${max} pts`;
+  document.getElementById("mP").style.width=(score/max*100)+"%";
+}
+
+/* scroll spy */
+const side=document.getElementById("side"),curEl=document.getElementById("curTopic");
+let activeId=null,ticking=false;
+function spy(){
+  ticking=false;
+  const line=innerHeight*0.38;let cur=null;
+  document.querySelectorAll(".topic").forEach(s=>{if(s.getBoundingClientRect().top<=line)cur=s});
+  const id=cur?cur.id:null;if(id===activeId)return;activeId=id;
+  navEl.querySelectorAll("a").forEach(a=>a.classList.toggle("active",a.dataset.t===id));
+  curEl.textContent=cur?cur.dataset.name:"Start here";
+  const a=id&&navEl.querySelector(`a[data-t="${id}"]`);
+  if(a){const st=side.scrollTop,top=a.offsetTop,h=side.clientHeight;
+    if(top<st+80||top>st+h-140)side.scrollTo({top:Math.max(0,top-h/3),behavior:"smooth"})}
+}
+addEventListener("scroll",()=>{if(!ticking){ticking=true;requestAnimationFrame(spy)}},{passive:true});
+addEventListener("resize",()=>{activeId=null;spy()},{passive:true});
+
+/* nav + drawer */
+const menuBtn=document.getElementById("menuBtn"),scrim=document.getElementById("scrim");
+const setDrawer=o=>{side.classList.toggle("open",o);scrim.classList.toggle("open",o);menuBtn.setAttribute("aria-expanded",o)};
+menuBtn.onclick=()=>setDrawer(!side.classList.contains("open"));
+scrim.onclick=()=>setDrawer(false);
+navEl.addEventListener("click",e=>{const a=e.target.closest("a");if(!a)return;e.preventDefault();
+  document.getElementById(a.dataset.t).scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});setDrawer(false)});
+
+/* maths toolbar */
+let lastInput=null;
+document.addEventListener("focusin",e=>{if(e.target.matches(".ansrow input"))lastInput=e.target});
+document.querySelectorAll(".mtb .key").forEach(k=>{
+  k.addEventListener("mousedown",e=>e.preventDefault());
+  k.addEventListener("click",()=>{
+    if(!lastInput||lastInput.disabled){return}
+    const ch=k.dataset.k,s=lastInput.selectionStart??lastInput.value.length,en=lastInput.selectionEnd??s;
+    lastInput.value=lastInput.value.slice(0,s)+ch+lastInput.value.slice(en);
+    lastInput.focus();try{lastInput.setSelectionRange(s+1,s+1)}catch(e){}
+  });
+});
+
+/* laser */
+const laser=document.getElementById("laser"),lb=document.getElementById("laserBtn");let laserOn=false;
+lb.onclick=()=>{laserOn=!laserOn;lb.setAttribute("aria-pressed",laserOn);laser.hidden=!laserOn;document.documentElement.classList.toggle("laser-on",laserOn)};
+addEventListener("pointermove",e=>{if(laserOn){laser.style.transform=`translate(${e.clientX}px,${e.clientY}px)`}},{passive:true});
+addEventListener("pointerdown",e=>{if(laserOn){laser.style.transform=`translate(${e.clientX}px,${e.clientY}px)`}},{passive:true});
+
+/* reset */
+const modal=document.getElementById("modal");
+document.getElementById("resetBtn").onclick=()=>{setDrawer(false);modal.hidden=false;document.getElementById("mNo").focus()};
+document.getElementById("mNo").onclick=()=>modal.hidden=true;
+document.getElementById("mYes").onclick=()=>{ST8={r:{},q:{}};save();try{localStorage.removeItem("p2checklist-v1")}catch(e){};modal.hidden=true;QINDEX={};TOTALQ=0;renderAll();activeId=null;spy()};
+
+renderAll();spy();
+</script>
+
+</body></html>
